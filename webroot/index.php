@@ -25,8 +25,11 @@
 					longitude = position.coords.longitude;
 					initialize();
 				}
-		
-			get_location();
+			if(navigator.geolocation != null)
+			{
+				get_location();	
+			}
+			
 		
 			function initialize() {
 				var myLatLng = new google.maps.LatLng(latitude, longitude);
