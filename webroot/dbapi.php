@@ -58,4 +58,19 @@ function dbReadAll()
 	return $query->fetchAll();
 }
 
+function dbReadTree($id)
+{
+	$conn = dbConnect();
+	$query = $conn->prepare("SELECT * FROM 'trees' WHERE id=:id");
+	$query->bindParam(':id', $id, PDO::PARAM_INT);
+	$query->execute();
+	$result = null;
+	if($query->rowCount() > 0)
+	{
+		$row = $query->fetch(PDO::FETCH_OBJ);
+		$result = new Tree($row->Species, $row->Health, $row->Height, $row->Lat, $row->Long, $row->LeafIMG);
+	}
+	return $result;
+}
+
 ?>
