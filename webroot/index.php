@@ -131,7 +131,7 @@
                 
                 <?php
                 
-                	$con = new PDO('mysql:host=crtreesorg.fatcowmysql.com;dbname=crtrees',"crtreesadmin","G0whalephants1!");
+                	$con = new PDO('mysql:host=crtreesorg.domain.com;dbname=dbname',"username","password");
                     $s = $con->prepare("SELECT * FROM `trees`");
                     $s->execute();
                     $results = $s->fetchAll();
