@@ -72,7 +72,7 @@
             }
 		</style>
         
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
     <script src="https://google-maps-utility-library-v3.googlecode.com/svn-history/r391/trunk/markerwithlabel/src/markerwithlabel.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -92,6 +92,8 @@
                 
                 var options = {
                   enableHighAccuracy: true,
+                  timeout: 30000, //30 secs
+		  maximumAge: 600000 //10 mins
                 };
 
 				function get_location(){
