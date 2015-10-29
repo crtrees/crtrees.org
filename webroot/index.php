@@ -199,7 +199,7 @@
             
             <div class='form-group'>
 			     <label for='height'>Height (approx feet)</label>
-			     <input type='number' name='height' class='form-control' id='height'/>
+			     <input type='number' name='height' class='form-control' id='height' min='1' step='.5'/>
             </div>
             
             <div class='form-group'>
