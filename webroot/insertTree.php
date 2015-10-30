@@ -1,5 +1,7 @@
 <?php
 
+require 'dbapi.php';
+
 print_r($_POST);
 
 $target_dir = "uploads/";
@@ -29,12 +31,14 @@ if ($uploadOk == 0) {
     }
 }
 
-	$con = new PDO('mysql:host=crtreesorg.fatcowmysql.com;dbname=crtrees',"crtreesadmin","G0whalephants1!");
+dbAddTree(new Tree($_POST[species], $_POST[health], $_POST[height], $_POST[latitude], $_POST[longitude], $target_file));
+
+	/*$con = new PDO('mysql:host=crtreesorg.fatcowmysql.com;dbname=crtrees',"crtreesadmin","G0whalephants1!");
 	$q = $con->prepare("INSERT INTO `trees` (`Species`, `Height`, `Lat`, `Long`, `Health`, `LeafIMG`) VALUES (:Species, :Height, $_POST[latitude], $_POST[longitude], '$_POST[health]', :file)");
 	$q->bindParam(':Species', $_POST[species], PDO::PARAM_INT);
 	$q->bindParam(':Height', $_POST[height], PDO::PARAM_INT);
 	$q->bindParam(':file', $target_file, PDO::PARAM_INT);
 	$q->execute();
 	$con->errorInfo();
-	$con = NULL;
+	$con = NULL;*/
 ?>

@@ -1,34 +1,7 @@
 <?php
 
-class Tree
-{
-	public $species;
-	public $health;
-	public $height;
-	public $latitude;
-	public $longitude;
-	public $image;
-	
-	public __construct()
-	{
-		$species = "Oak";
-		$health = "g";
-		$height = 20;
-		$latitude = 0;
-		$longitude = 0;
-		$image = "";
-	}
-	
-	public __construct($spe, $hea, $hei, $lat, $lon, $ima)
-	{
-		$species = $spe;
-		$health = $hea;
-		$height = $hei;
-		$latitude = $lat;
-		$longitude = $lon;
-		$image = $ima;
-	}
-}
+require 'tree.php';
+require 'log.php';
 
 function dbConnect()
 {
@@ -38,14 +11,25 @@ function dbConnect()
 function dbAddTree($tree)
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("INSERT INTO `trees` (`Species`, `Height`, `Lat`, `Long`, `Health`, `LeafIMG`) 
-		VALUES (:Species, :Height, :Latitude, :Longitude, :Health, :file)");
+	$query = $conn->prepare("INSERT INTO `trees` (`Species`, `Lat`, `Long`) 
+		VALUES (:Species, :Latitude, :Longitude");
 	$query->bindParam(':Species', $tree->species, PDO::PARAM_INT);
-	$query->bindParam(':Height', $tree->height, PDO::PARAM_INT);
-	$query->bindParam(':Health', $tree->health, PDO::PARAM_INT);
 	$query->bindParam(':Latitude', $tree->latitude, PDO::PARAM_INT);
 	$query->bindParam(':Longitude', $tree->longitude, PDO::PARAM_INT);
-	$query->bindParam(':file', $tree->image, PDO::PARAM_INT);
+	$query->execute();
+	$conn = NULL;
+}
+
+function dbAddLog($log)
+{
+	$conn = dbConnect();
+	$query = $conn->prepare("INSERT INTO 'logs' ('tree', 'height', 'health', 'image', 'comment')
+		VALUES (:tree, :height, :health, :image, :comment)");
+	$query->bindParam(':tree', $log->tree, PDO::PARAM_INT);
+	$query->bindParam(':height', $log->height, PDO::PARAM_INT);
+	$query->bindParam(':health', $log->health, PDO::PARAM_INT);
+	$query->bindParam(':image', $log->image, PDO::PARAM_INT);
+	$query->bindParam(':comment', $log->comment, PDO::PARAM_INT);
 	$query->execute();
 	$conn = NULL;
 }
@@ -58,17 +42,27 @@ function dbReadAll()
 	return $query->fetchAll();
 }
 
+function dbReadLogs($treeID)
+{
+	$conn = dbConnect();
+	$query = $conn->prepare("SELECT * FROM 'logs' WHERE tree=:id");
+	$query->bindParam(':id', $treeID, PDO::PARAM_INT);
+	$query->execute();
+	return $query->fetchAll();
+}
+
 function dbReadTree($id)
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("SELECT * FROM 'trees' WHERE id=:id");
+	$query = $conn->prepare("SELECT * FROM 'trees' WHERE ID=:id");
 	$query->bindParam(':id', $id, PDO::PARAM_INT);
 	$query->execute();
 	$result = null;
+	echo $query->rowCount();
 	if($query->rowCount() > 0)
 	{
 		$row = $query->fetch(PDO::FETCH_OBJ);
-		$result = new Tree($row->Species, $row->Health, $row->Height, $row->Lat, $row->Long, $row->LeafIMG);
+		$result = new Tree($row->Species, $row->Lat, $row->Long);
 	}
 	return $result;
 }
