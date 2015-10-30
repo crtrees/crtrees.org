@@ -92,6 +92,8 @@
                 
                 var options = {
                   enableHighAccuracy: true,
+                  timeout: 30000, //30 secs
+		  maximumAge: 600000 //10 mins
                 };
 
 				function get_location(){
@@ -131,7 +133,7 @@
                 
                 <?php
                 
-                	$con = new PDO('mysql:host=crtreesorg.fatcowmysql.com;dbname=crtrees',"crtreesadmin","G0whalephants1!");
+                	$con = new PDO('mysql:host=crtreesorg.domain.com;dbname=dbname',"username","password");
                     $s = $con->prepare("SELECT * FROM `trees`");
                     $s->execute();
                     $results = $s->fetchAll();
@@ -197,7 +199,7 @@
             
             <div class='form-group'>
 			     <label for='height'>Height (approx feet)</label>
-			     <input type='number' name='height' class='form-control' id='height'/>
+			     <input type='number' name='height' class='form-control' id='height' min='1' step='.5'/>
             </div>
             
             <div class='form-group'>
