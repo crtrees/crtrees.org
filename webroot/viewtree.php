@@ -7,14 +7,19 @@
 		<hr />
 		<?php
 			require 'dbapi.php';
-			$tree = dbReadTree($_GET[id]);
+			$treeid = intval($_GET[id]);
+			if($treeid === 2)
+			{
+				echo "ECH";
+			}
+			$tree = dbReadTree($treeid);
 			if($tree == null)
 			{
 				echo "There is no tree with ID $_GET[id]";
 			}
 			else
 			{
-				echo $tree->species;
+				echo $tree;
 			}
 		?>
 	</body>

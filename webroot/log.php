@@ -10,11 +10,11 @@ class Log
 	
 	function __construct($tre, $hei, $hea, $img, $com)
 	{
-		$this->tree = $tre;
-		$this->height = $hei;
-		$this->health = $hea;
-		$this->image = $img;
-		$this->comment = $com;
+		$tree = $tre;
+		$height = $hei;
+		$health = $hea;
+		$image = $img;
+		$comment = $com;
 	}
 }
 
