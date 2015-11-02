@@ -14,7 +14,7 @@
 			}
 			else
 			{
-				echo $tree;
+				echo $tree->species;
 			}
 		?>
 	</body>
