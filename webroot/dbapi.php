@@ -45,7 +45,7 @@ function dbReadAll()
 function dbReadLogs($treeID)
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("SELECT * FROM 'logs' WHERE tree=:id");
+	$query = $conn->prepare("SELECT * FROM `logs` WHERE tree=:id");
 	$query->bindParam(':id', $treeID, PDO::PARAM_INT);
 	$query->execute();
 	return $query->fetchAll();
@@ -54,7 +54,7 @@ function dbReadLogs($treeID)
 function dbReadTree($id)
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("SELECT * FROM 'trees' WHERE ID=$id");
+	$query = $conn->prepare("SELECT * FROM `trees` WHERE ID=$id");
 	$query->execute();
 	$result = null;
 	if($query->rowCount() > 0)

@@ -8,9 +8,9 @@ class Tree
 	
 	function __construct($spe, $lat, $lon)
 	{
-		$species = $spe;
-		$latitude = $lat;
-		$longitude = $lon;
+		$this->species = $spe;
+		$this->latitude = $lat;
+		$this->longitude = $lon;
 	}
 }
 

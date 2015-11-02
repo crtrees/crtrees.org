@@ -8,10 +8,6 @@
 		<?php
 			require 'dbapi.php';
 			$treeid = intval($_GET[id]);
-			if($treeid === 2)
-			{
-				echo "ECH";
-			}
 			$tree = dbReadTree($treeid);
 			if($tree == null)
 			{
@@ -19,7 +15,7 @@
 			}
 			else
 			{
-				echo $tree;
+				echo $tree->species;
 			}
 		?>
 	</body>
