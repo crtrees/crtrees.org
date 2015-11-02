@@ -132,8 +132,8 @@
                 var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                 
                 <?php
-                
-                	$con = new PDO('mysql:host=crtreesorg.fatcowmysql.com;dbname=crtrees',"username","password");
+					require 'dbapt.php';
+                	$con = dbConnect();
                     $s = $con->prepare("SELECT * FROM `trees`");
                     $s->execute();
                     $results = $s->fetchAll();
