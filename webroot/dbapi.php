@@ -23,7 +23,7 @@ function dbAddTree($tree)
 function dbAddLog($log)
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("INSERT INTO 'logs' ('tree', 'height', 'health', 'image', 'comment')
+	$query = $conn->prepare("INSERT INTO `logs` ('tree', 'height', 'health', 'image', 'comment')
 		VALUES (:tree, :height, :health, :image, :comment)");
 	$query->bindParam(':tree', $log->tree, PDO::PARAM_INT);
 	$query->bindParam(':height', $log->height, PDO::PARAM_INT);
@@ -37,7 +37,7 @@ function dbAddLog($log)
 function dbReadAll()
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("SELECT * FROM 'trees'");
+	$query = $conn->prepare("SELECT * FROM `trees`");
 	$query->execute();
 	return $query->fetchAll();
 }
@@ -45,7 +45,7 @@ function dbReadAll()
 function dbReadLogs($treeID)
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("SELECT * FROM 'logs' WHERE tree=:id");
+	$query = $conn->prepare("SELECT * FROM `logs` WHERE tree=:id");
 	$query->bindParam(':id', $treeID, PDO::PARAM_INT);
 	$query->execute();
 	return $query->fetchAll();
@@ -54,7 +54,7 @@ function dbReadLogs($treeID)
 function dbReadTree($id)
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("SELECT * FROM 'trees' WHERE ID=:id");
+	$query = $conn->prepare("SELECT * FROM `trees` WHERE ID=:id LIMIT 1");
 	$query->bindParam(':id', $id, PDO::PARAM_INT);
 	$query->execute();
 	$result = null;
