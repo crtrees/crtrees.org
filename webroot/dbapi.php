@@ -61,8 +61,8 @@ function dbReadTree($id)
 	echo $query->rowCount();
 	if($query->rowCount() > 0)
 	{
-		$row = $query->fetch(PDO::FETCH_OBJ);
-		$result = new Tree($row->Species, $row->Lat, $row->Long);
+		$row = $query->fetch();
+		$result = new Tree($row[Species], $row[Lat], $row[Long]);
 	}
 	return $result;
 }
