@@ -132,7 +132,7 @@
                 var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                 
                 <?php
-					require 'dbapt.php';
+					require 'dbapi.php';
                 	$con = dbConnect();
                     $s = $con->prepare("SELECT * FROM `trees`");
                     $s->execute();
