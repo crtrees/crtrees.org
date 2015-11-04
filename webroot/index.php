@@ -133,13 +133,16 @@
                 
                 <?php
 					require 'dbapi.php';
-                	$con = dbConnect();
-                    $s = $con->prepare("SELECT * FROM `trees`");
-                    $s->execute();
-                    $results = $s->fetchAll();
+                    $results = dbReadAll();
                     foreach($results as $result){
+						$latestLog = dbLastLog($result[ID]);
+						$img = '';
+						if($latestLog != false)
+						{
+							$img = $latestLog[image];
+						}
                         echo "
-                            var contentString$result[ID] = '$result[Species]<br><img width=\'150px\' src=\'$result[LeafIMG]\'>';
+                            var contentString$result[ID] = '$result[Species]<br><img width=\'150px\' src=\'$imgl\'>';
                             
                             var infowindow$result[ID] = new google.maps.InfoWindow({
                                 content: contentString$result[ID]
@@ -211,6 +214,11 @@
                     <option value='p'>Poor</option>
                     <option value='d'>Dead</option>
                 </select>
+            </div>
+            
+            <div class='form-group'>
+                <label for='comments'>Comments</label>
+			    <input type='text' name='comment' class='form-control' id='comment' />
             </div>
             
             <div class='form-group'>

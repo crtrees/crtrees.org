@@ -37,7 +37,7 @@ function dbAddLog($log)
 function dbReadAll()
 {
 	$conn = dbConnect();
-	$query = $conn->prepare("SELECT * FROM 'trees'");
+	$query = $conn->prepare("SELECT * FROM trees");
 	$query->execute();
 	return $query->fetchAll();
 }
@@ -51,6 +51,15 @@ function dbReadLogs($treeID)
 	return $query->fetchAll();
 }
 
+function dbLastLog($treeID)
+{
+	$conn = dbConnect();
+	$query = $conn->prepare("SELECT * FROM `logs` WHERE tree=:id ORDER BY timestamp LIMIT 1");
+	$query->bindParam(':id', $treeID, PDO::PARAM_INT);
+	$query->execute();
+	return $query->fetch();
+}
+
 function dbReadTree($id)
 {
 	$conn = dbConnect();
@@ -59,10 +68,26 @@ function dbReadTree($id)
 	$result = null;
 	if($query->rowCount() > 0)
 	{
-		$row = $query->fetch(PDO::FETCH_OBJ);
-		$result = new Tree($row->Species, $row->Lat, $row->Long);
+		$row = $query->fetch();
+		$result = new Tree($row[Species], $row[Lat], $row[Long]);
 	}
 	return $result;
+}
+
+function dbIsTreeNew($tree)
+{
+	$conn = dbConnect();
+	$query = $conn->prepare("SELECT * FROM `trees` WHERE ((Lat-:l) < 0.0001 OR (Long-:lo) < 0x0001) AND Species=:sp");
+	$query->bindParam(":l", $tree->latitude, PDO::PARAM_INT);
+	$query->bindParam(":lo", $tree->longitude, PDO::PARAM_INT);
+	$query->bindParam(":sp", $tree->species, PDO::PARAM_INT);
+	$query->execute();
+	if($query->rowCount() > 0)
+	{
+		$row = $query->fetch();
+		return $row[id];
+	}
+	return true;
 }
 
 ?>
